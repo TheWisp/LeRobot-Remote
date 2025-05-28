@@ -14,8 +14,8 @@
             filePath = "LeRobot Remote/CommandViewModel.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "31"
-            endingLineNumber = "31"
+            startingLineNumber = "106"
+            endingLineNumber = "106"
             landmarkName = "handleJoystickMove(x:y:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -24,32 +24,16 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "250B6781-425B-42C6-B938-AB9B0C115D0F"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "LeRobot Remote/CommandViewModel.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "29"
-            endingLineNumber = "29"
+            startingLineNumber = "104"
+            endingLineNumber = "104"
             landmarkName = "handleJoystickMove(x:y:)"
             landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "607B04C0-E0AC-4FB7-ADA8-8549F6CB355F"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "LeRobot Remote/ZmqWrapper.mm"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "68"
-            endingLineNumber = "68"
-            landmarkName = "send_packet(msg)"
-            landmarkType = "9">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

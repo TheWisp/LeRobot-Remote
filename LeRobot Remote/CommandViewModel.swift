@@ -83,11 +83,13 @@ class CommandViewModel: ObservableObject {
     func handleJoystickMove(x: Double, y: Double) {
         self.joyX = x
         self.joyY = y
+        //print("x: \(x), y: \(y)")
         
-        let xy_speed_medium = 0.2
+        let xy_speed = 0.4 // High speed
+        let forward = -y
+        let left = -x
         
-        
-        let raw = bodyToWheelRaw(xCmd: x * xy_speed_medium, yCmd: y * xy_speed_medium, thetaCmd: 0)
+        let raw = bodyToWheelRaw(xCmd: left * xy_speed, yCmd: forward * xy_speed, thetaCmd: 0)
         DispatchQueue.main.async {
             let msg = """
             {
