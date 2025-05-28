@@ -1,17 +1,24 @@
-//
-//  LeRobot_RemoteApp.swift
-//  LeRobot Remote
-//
-//  Created by Fei Teng on 26/05/2025.
-//
-
 import SwiftUI
 
 @main
 struct LeRobot_RemoteApp: App {
+    @StateObject private var viewModel = CommandViewModel()
+    
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            ContentView(viewModel: viewModel)
         }
+    }
+    
+    init() {
+        do {
+            try connectLeKiwi()
+        } catch {
+            fatalError("Failed to connect to LeKiwi: \(error)")
+        }
+    }
+    
+    func connectLeKiwi() throws {
+        init_zmq()
     }
 }

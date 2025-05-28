@@ -1,24 +1,18 @@
-//
-//  ContentView.swift
-//  LeRobot Remote
-//
-//  Created by Fei Teng on 26/05/2025.
-//
-
 import SwiftUI
 
 struct ContentView: View {
+    @ObservedObject var viewModel: CommandViewModel
+    
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+        HStack {
+            JoystickView(onMove: { x, y in
+                viewModel.handleJoystickMove(x: x, y: y)
+            }).offset(x:-225, y:87)
         }
         .padding()
     }
 }
 
-#Preview {
-    ContentView()
+#Preview(traits: .landscapeLeft) {
+    ContentView(viewModel: CommandViewModel())
 }
