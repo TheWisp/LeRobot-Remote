@@ -14,8 +14,8 @@
             filePath = "LeRobot Remote/CommandViewModel.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "106"
-            endingLineNumber = "106"
+            startingLineNumber = "29"
+            endingLineNumber = "29"
             landmarkName = "handleJoystickMove(x:y:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -30,8 +30,8 @@
             filePath = "LeRobot Remote/CommandViewModel.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "104"
-            endingLineNumber = "104"
+            startingLineNumber = "27"
+            endingLineNumber = "27"
             landmarkName = "handleJoystickMove(x:y:)"
             landmarkType = "7">
          </BreakpointContent>

@@ -5,19 +5,19 @@ struct JoystickView: View {
     // MARK: Public API
     
     /// Called whenever the joystick’s position changes.
-    var onMove: (_ x: CGFloat, _ y: CGFloat) -> Void
+    var onMove: (_ x: Double, _ y: Double) -> Void
     
     /// Size of the joystick base
-    var size: CGFloat = 150
+    var size: Double = 150
     
     /// Size of the knob
-    var knobSize: CGFloat = 60
+    var knobSize: Double = 60
     
     // MARK: Internal state
     
     @State private var dragOffset: CGSize = .zero
     
-    private var radius: CGFloat { (size - knobSize) / 2 }
+    private var radius: Double { (size - knobSize) / 2 }
     
     var body: some View {
         // Base and knob stacked
