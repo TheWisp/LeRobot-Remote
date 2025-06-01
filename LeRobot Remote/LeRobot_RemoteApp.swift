@@ -2,7 +2,7 @@ import SwiftUI
 
 @main
 struct LeRobot_RemoteApp: App {
-    @StateObject private var viewModel = CommandViewModel()
+    private var viewModel = CommandViewModel()
     
     var body: some Scene {
         WindowGroup {
@@ -16,7 +16,19 @@ struct LeRobot_RemoteApp: App {
         } catch {
             fatalError("Failed to connect to LeKiwi: \(error)")
         }
+        
+        DispatchQueue.global(qos: .userInteractive).async { [self] in
+            self.runLoop()
+        }
     }
+    
+    func runLoop() {
+        while true {
+            viewModel.update()
+            Thread.sleep(forTimeInterval: 0.001)
+        }
+    }
+    
     
     func connectLeKiwi() throws {
         init_zmq()
