@@ -264,6 +264,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "LeRobot-Remote-Info.plist";
+				INFOPLIST_KEY_NSCameraUsageDescription = "Using camera to support AR Kit";
 				INFOPLIST_KEY_NSLocalNetworkUsageDescription = "This app uses local network to connect to remote robots on your network.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -301,6 +302,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "LeRobot-Remote-Info.plist";
+				INFOPLIST_KEY_NSCameraUsageDescription = "Using camera to support AR Kit";
 				INFOPLIST_KEY_NSLocalNetworkUsageDescription = "This app uses local network to connect to remote robots on your network.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
