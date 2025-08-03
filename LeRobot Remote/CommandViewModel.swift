@@ -39,7 +39,7 @@ class CommandViewModel: ObservableObject {
     static let wristFlexMin: Double = -90.0
     static let wristFlexMax: Double = 60.0
     static let moveXYSpeedHigh = 0.4
-    static let arKitZSmoothingAlpha: Double = 0.15
+    static let arKitSmoothingAlpha: Double = 0.15
     
     var hasChanged: Bool = false
     var lastTimestamp: TimeInterval?
@@ -62,8 +62,10 @@ class CommandViewModel: ObservableObject {
         didSet { hasChanged = true }
     }
     
-    var smoothedArKitZ: Double = 0.0
+    var smoothedArKit: vector = .init(x: 0, y: 0, z: 0)
     
+    var lastSentVector: vector?
+
     init() {
 
         // Set your desired update rate
@@ -102,9 +104,12 @@ class CommandViewModel: ObservableObject {
     }
     
     func update() {
+
         self.handleMotion()
         
-        smoothedArKitZ = CommandViewModel.arKitZSmoothingAlpha * Double(arKitMotionSession.z) + (1 - CommandViewModel.arKitZSmoothingAlpha) * smoothedArKitZ
+        smoothedArKit.x = CommandViewModel.arKitSmoothingAlpha * Double(arKitMotionSession.x) + (1 - CommandViewModel.arKitSmoothingAlpha) * smoothedArKit.x
+        smoothedArKit.y = CommandViewModel.arKitSmoothingAlpha * Double(arKitMotionSession.y) + (1 - CommandViewModel.arKitSmoothingAlpha) * smoothedArKit.y
+        smoothedArKit.z = CommandViewModel.arKitSmoothingAlpha * Double(arKitMotionSession.z) + (1 - CommandViewModel.arKitSmoothingAlpha) * smoothedArKit.z
         
         if !hasChanged { return }
         hasChanged = false
@@ -128,56 +133,65 @@ class CommandViewModel: ObservableObject {
         // The phone's roll is 0 when laying flat. This should map to gripper looking down.
         let wristFlex = max(min(-roll + 90, CommandViewModel.wristFlexMax), CommandViewModel.wristFlexMin)
 
-        //experimental, when lifted 0.01m = changing from 180 to 135 degrees
-        let shoulderLiftStart = 191.0
-        let shoulderLiftEnd = 135.0
-        let shoulderLiftMappedDistance = 0.1
-        var shoulderLiftGoalDegree = shoulderLiftStart + (shoulderLiftEnd - shoulderLiftStart)
-            * min(max(smoothedArKitZ / shoulderLiftMappedDistance, 0.0), 1.0)
+        // Experimental EE movement
+        let minimumChange: Double = 0.001
         
-        // elbow_flex after calibration: -110 (open) to 8 (closed)
-        let elbowFlexStart = 8.0
-        let elbowFlexEnd = -110.0
-        let elbowFlexMappedDistance = 0.1
+        var deltaArKitX: Double = 0
+        var deltaArKitY: Double = 0
+        var deltaArKitZ: Double = 0
         
-        let elbowFlexGoalDegree = elbowFlexStart + (elbowFlexEnd - elbowFlexStart)
-        * min(max(smoothedArKitZ / elbowFlexMappedDistance, 0.0), 1.0)
-        
-        var msg = """
-        {
-            "raw_velocity" : {
-                "left_wheel" : \(rawVelocity[0]),
-                "back_wheel" : \(rawVelocity[1]),
-                "right_wheel" : \(rawVelocity[2])
-            },
-            "arm_partial_positions" : {
-                "wrist_roll": \(wristRoll),
-                "wrist_flex": \(wristFlex),
-                "shoulder_lift": \(shoulderLiftGoalDegree),
-                "elbow_flex": \(elbowFlexGoalDegree)
-            }
+        if lastSentVector == nil {
+            lastSentVector = smoothedArKit
         }
-        """
         
-        let dbgMsg = """
-        {
-            "raw_velocity" : {
-                "left_wheel" : \(rawVelocity[0]),
-                "back_wheel" : \(rawVelocity[1]),
-                "right_wheel" : \(rawVelocity[2])
-            },
-            "arm_partial_positions" : {
-                "shoulder_lift": \(shoulderLiftGoalDegree),
-                "elbow_flex": \(elbowFlexGoalDegree)
+        if let last = lastSentVector {
+            if abs(smoothedArKit.x - last.x) > minimumChange {
+                deltaArKitX = smoothedArKit.x - last.x
             }
+            if abs(smoothedArKit.y - last.y) > minimumChange {
+                deltaArKitY = smoothedArKit.y - last.y
+            }
+            if abs(smoothedArKit.z - last.z) > minimumChange {
+                deltaArKitZ = smoothedArKit.z - last.z
+            }
+            
+            lastSentVector = smoothedArKit
         }
-        """
+        //if (deltaArKitX == 0 && deltaArKitY == 0 && deltaArKitZ == 0) {
+        //    return
+        //}
         
-        // Debug
-        //msg = dbgMsg
+        // Debug delta
+        let timeFormatter = DateFormatter()
+        timeFormatter.dateFormat = "HH:mm:ss.SSS"
+        let shortTime = timeFormatter.string(from: Date())
+        print("deltaX: \(String(format: "%.4f", deltaArKitX)), deltaY: \(String(format: "%.4f", deltaArKitY)), deltaZ: \(String(format: "%.4f", deltaArKitZ)), wristRoll: \(String(format: "%.2f", wristRoll)), wristFlex: \(String(format: "%.2f", wristFlex)), time: \(shortTime)")
+        
+        // ARKit to Robotics Axis Mapping:
+        //   ARKit Y is up          -> Robotics Z is up
+        //   ARKit X is right       -> Robotics Y is right
+        //   ARKit Z (calculated)   -> Robotics X (Front)
+        let robotDeltaScale = 7.5
+        let robotDeltaUp = deltaArKitY * robotDeltaScale
+        let robotDeltaRight = -deltaArKitX * robotDeltaScale
+        let robotDeltaFront = -deltaArKitZ * robotDeltaScale
 
+        let msg = """
+        {
+            "delta_x": \(robotDeltaFront),
+            "delta_y": \(robotDeltaRight),
+            "delta_z": \(robotDeltaUp),
+            "arm_wrist_roll.pos": \(wristRoll),
+            "arm_wrist_flex.pos": \(wristFlex)
+        }
+        """
+ 
         DispatchQueue.main.async {
-            send_packet(msg.cString(using: String.Encoding.ascii))
+            guard let cStr = msg.cString(using: String.Encoding.ascii) else {
+                print("Failed to encode message to ASCII: \(msg)")
+                return
+            }
+            send_packet(cStr)
         }
     }
 }

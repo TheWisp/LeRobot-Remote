@@ -71,7 +71,7 @@ final class ARKitMotionSession: NSObject, ARSessionDelegate {
         let roll   = rad2deg(relE.z)
 
         // 4. Print it all
-        print(String(format: "x: %.3f  y: %.3f  z: %.3f  |  pitch: %.1f°  yaw: %.1f°  roll: %.1f°",
-                     p.x, p.y, p.z, pitch, yaw, roll))
+        //print(String(format: "x: %.3f  y: %.3f  z: %.3f  |  pitch: %.1f°  yaw: %.1f°  roll: %.1f°",
+        //             p.x, p.y, p.z, pitch, yaw, roll))
     }
 }

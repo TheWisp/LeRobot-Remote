@@ -96,6 +96,6 @@ void send_packet(const char* msg) {
         printf("Failed to send: %s, errno = %s\n", msg, strerror(errno));
         return;
     } else {
-        printf("zmq message sent: %s, total byte = %d\n", msg, rc);
+        //printf("zmq message sent: %s, total byte = %d\n", msg, rc);
     }
 }
