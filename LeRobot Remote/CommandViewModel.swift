@@ -20,12 +20,10 @@ class CommandViewModel: ObservableObject {
     var roll: Double = 0 {
         didSet { hasChanged = true }
     }
-
-    var velocity: vector = .init(x: 0, y: 0, z: 0)
-    var displacement: vector = .init(x: 0, y: 0, z: 0) {
+    var gripper: Double = 0 {
         didSet { hasChanged = true }
     }
-    
+
     var smoothedArKit: vector = .init(x: 0, y: 0, z: 0)
     var lastSmoothedArKit: vector?
 
@@ -48,6 +46,10 @@ class CommandViewModel: ObservableObject {
     func handleJoystickMove(x: Double, y: Double) {
         self.joyX = x
         self.joyY = y
+    }
+
+    func handleGripperMove(value: Double) {
+        self.gripper = value
     }
     
     func handleMotion() {
@@ -129,6 +131,7 @@ class CommandViewModel: ObservableObject {
             "delta_z": \(robotDeltaUp),
             "arm_wrist_roll.pos": \(wristRoll),
             "arm_wrist_flex.pos": \(wristFlex),
+            "arm_gripper": \(gripper),
             "x.vel": \(forward),
             "y.vel": \(left)
         }
