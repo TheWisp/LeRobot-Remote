@@ -107,11 +107,6 @@ class CommandViewModel: ObservableObject {
         // Movement
         let forward = -self.joyY // Because Y is downwards in screen space
         let left = -self.joyX // Because X is towards right in screen space
-        
-        let rawVelocity = bodyToWheelRaw(
-            xCmd: left * LeKiwiConstants.moveXYSpeedHigh,
-            yCmd: forward * LeKiwiConstants.moveXYSpeedHigh,
-            thetaCmd: 0)
 
         // End effector
         let (wristRoll, wristFlex) = calculateWristState(yaw: yaw, roll: roll)
@@ -133,7 +128,9 @@ class CommandViewModel: ObservableObject {
             "delta_y": \(robotDeltaRight),
             "delta_z": \(robotDeltaUp),
             "arm_wrist_roll.pos": \(wristRoll),
-            "arm_wrist_flex.pos": \(wristFlex)
+            "arm_wrist_flex.pos": \(wristFlex),
+            "x.vel": \(forward),
+            "y.vel": \(left)
         }
         """
  
