@@ -13,11 +13,7 @@
 void *cmd_socket = NULL;
 void *video_socket = NULL;
 
-void init_zmq() {
-    const char *remote_ip = "192.168.1.137";
-    const char *cmd_port = "5555";
-    const char *video_port = "5556";
-    
+void init_zmq(const char* remote_ip, const char* cmd_port, const char* video_port) {
     void *context = zmq_ctx_new();
     if (!context) {
         printf("Failed to create zmq context\n");
@@ -99,3 +95,4 @@ void send_packet(const char* msg) {
         //printf("zmq message sent: %s, total byte = %d\n", msg, rc);
     }
 }
+

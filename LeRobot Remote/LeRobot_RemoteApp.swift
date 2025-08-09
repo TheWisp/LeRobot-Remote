@@ -1,4 +1,12 @@
 import SwiftUI
+import Foundation
+
+@objcMembers
+public class LeKiwiHostConfig: NSObject {
+    public static let remoteIP = "192.168.1.137"
+    public static let cmdPort = "5555"
+    public static let videoPort = "5556"
+}
 
 @main
 struct LeRobot_RemoteApp: App {
@@ -31,6 +39,6 @@ struct LeRobot_RemoteApp: App {
     
     
     func connectLeKiwi() throws {
-        init_zmq()
+        init_zmq(LeKiwiHostConfig.remoteIP, LeKiwiHostConfig.cmdPort, LeKiwiHostConfig.videoPort)
     }
 }
