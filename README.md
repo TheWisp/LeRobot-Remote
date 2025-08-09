@@ -53,5 +53,6 @@ Replace the path to the URDF with the one in your own repository and run the com
 python -m lerobot.robots.lekiwi.lekiwi_host --robot.type=lekiwi_end_effector --robot.id=my_awesome_kiwi --robot.urdf_path="/home/feit/SO-ARM100/Simulation/SO101/so101_new_calib.urdf"
 ```
 
-![Result](https://github.com/TheWisp/LeRobot-Remote/blob/730a0b7948620b7a52f38b6f24a23fcc72d706b0/video-55_singular_display.mov)
+[![Watch the demonstration](https://img.youtube.com/vi/C6dTzj1iSk4/0.jpg)](https://youtube.com/shorts/C6dTzj1iSk4?feature=share)
+
 
