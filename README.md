@@ -20,8 +20,7 @@ You would also need this repository https://github.com/TheRobotStudio/SO-ARM100 
 Follow the [HuggingFace Lekiwi tutorial](https://huggingface.co/docs/lerobot/lekiwi) to set up the remote Lekiwi host in the Raspberry Pi environment. Note that you can skip the calibration step from the tutorial for now, because we are using a different robot type and robot ID, and we will calibrate the robot upon the first run.
 
 4. Build and run the app
-Open the iOS project in this repository using XCode, choose the target iPhone and run the app. You may need to enable developer mode and trust the computer first.
-The configuration needs to be changed to match your local Raspberry Pi setup. By default, this is the IP of `raspberripi.local`. You can find the IP with the following command:
+Open the iOS project in this repository using XCode. Then, change the network configuration to match your local Raspberry Pi setup. By default, this is the IP of `raspberripi.local`. You can find the IP with the following command:
 
 ```
 ssh raspberrypi.local hostname -I
@@ -36,6 +35,10 @@ In `LeRobot_RemoteApp.swift`, change the IP to matching the LeKiwi host.
     public static let cmdPort = "5555" // Usually shouldn't need to change
     public static let videoPort = "5556" // Usually shouldn't need to change
 ```
+
+Finally, choose your target iPhone and deploy the iOS app. You may need to enable developer mode and trust the computer in order to run the untrusted app.
+
+<img src="IMG_6147.PNG" alt="App preview" width="300" style="border: 1px solid #ccc; padding: 4px;">
 
 6. Run the host robot
 Activate the environment:
