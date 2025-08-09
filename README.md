@@ -11,17 +11,20 @@ The action button on the screen controls the gripper.
 
 ## Usage
 
-1. Repository setup on Raspberry Pi
+### Repository setup on Raspberry Pi
+
 Clone this fork of LeRobot: https://github.com/TheWisp/lerobot/tree/lekiwi-eef. The repository contains the required additional inverse kinematic support to control LeKiwi in the end-effector space rather than the joint-space.
 
 You would also need this repository https://github.com/TheRobotStudio/SO-ARM100 in order to get the URDF file for the arm part of the robot.
 
 Note: All of the repositories above need to be cloned on your Raspberry Pi, not your local computer!
 
-2. Setup LeKiwi
+### Setup LeKiwi
+
 Follow the [HuggingFace Lekiwi tutorial](https://huggingface.co/docs/lerobot/lekiwi) to set up the remote Lekiwi host in the Raspberry Pi environment. Note that you can skip the calibration step from the tutorial for now, because we are using a different robot type and robot ID, and we will calibrate the robot upon the first run.
 
-3. Build and run the app
+### Build and run the app
+
 Open the iOS project in this repository using XCode. Then, change the network configuration to match your local Raspberry Pi setup. By default, this is the IP of `raspberripi.local`. You can find the IP with the following command:
 
 ```
@@ -42,7 +45,8 @@ Finally, choose your target iPhone and deploy the iOS app. You may need to enabl
 
 <img src="IMG_6147.PNG" alt="App preview" width="300" style="border: 1px solid #ccc; padding: 4px;">
 
-4. Run the host robot
+### Run the host robot
+
 Activate the environment:
 ```
 conda activate lerobot
@@ -53,6 +57,7 @@ Replace the path to the URDF with the one in your own repository and run the com
 python -m lerobot.robots.lekiwi.lekiwi_host --robot.type=lekiwi_end_effector --robot.id=my_awesome_kiwi --robot.urdf_path="/home/feit/SO-ARM100/Simulation/SO101/so101_new_calib.urdf"
 ```
 
+## Demo
 [![Watch the demonstration](https://img.youtube.com/vi/C6dTzj1iSk4/0.jpg)](https://youtube.com/shorts/C6dTzj1iSk4?feature=share)
 
 
