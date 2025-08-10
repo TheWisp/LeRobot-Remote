@@ -25,7 +25,7 @@ Follow the [HuggingFace Lekiwi tutorial](https://huggingface.co/docs/lerobot/lek
 
 ### Build and run the app
 
-Open the iOS project in this repository using XCode. Then, change the network configuration to match your local Raspberry Pi setup. By default, this is the IP of `raspberripi.local`. You can find the IP with the following command:
+Open the iOS project in this repository using XCode. Then, change the network configuration to match your local Raspberry Pi setup. By default, this is the IP of `raspberrypi.local`. You can find the IP with the following command:
 
 ```
 ssh raspberrypi.local hostname -I
